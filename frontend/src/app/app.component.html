@@ -1,0 +1,71 @@
+<h1>Sistema experto de estrategias de estudio</h1>
+
+<form (ngSubmit)="enviar()">
+  <label>
+    Estilo:
+    <select [(ngModel)]="entrada.estilo" name="estilo">
+      <option>VISUAL</option>
+      <option>AUDITIVO</option>
+      <option>KINESTESICO</option>
+      <option>MIXTO</option>
+    </select>
+  </label>
+
+  <label>
+    Dificultad:
+    <select [(ngModel)]="entrada.dificultad" name="dificultad">
+      <option>BAJA</option>
+      <option>MEDIA</option>
+      <option>ALTA</option>
+    </select>
+  </label>
+
+  <label>
+    Tiempo (min):
+    <input type="number" [(ngModel)]="entrada.tiempoMinutos" name="tiempoMinutos">
+  </label>
+
+  <label>
+    Conocimiento previo:
+    <select [(ngModel)]="entrada.conocimientoPrevio" name="conocimientoPrevio">
+      <option>BAJO</option>
+      <option>MEDIO</option>
+      <option>ALTO</option>
+    </select>
+  </label>
+
+  <label>
+    Horas para el examen:
+    <input type="number" [(ngModel)]="entrada.horasParaExamen" name="horasParaExamen">
+  </label>
+
+  <label>
+    Objetivo:
+    <select [(ngModel)]="entrada.objetivo" name="objetivo">
+      <option>MEMORIZAR</option>
+      <option>RESOLVER_PROBLEMAS</option>
+      <option>COMPRENDER</option>
+    </select>
+  </label>
+
+  <button type="submit" [disabled]="cargando">Consultar</button>
+</form>
+
+<p *ngIf="cargando">Consultando sistema experto...</p>
+<p *ngIf="error">{{ error }}</p>
+
+<div *ngIf="resultado">
+  <h2>Técnicas recomendadas</h2>
+  <ul>
+    <li *ngFor="let t of resultado.tecnicasRecomendadas">{{ t }}</li>
+  </ul>
+
+  <h2>Plan de estudio</h2>
+  <div *ngFor="let b of resultado.bloques">
+    <h3>{{ b.nombre }} ({{ b.duracionMinutos }} min)</h3>
+    <p>{{ b.descripcion }}</p>
+  </div>
+
+  <h2>Justificación</h2>
+  <pre>{{ resultado?.justificacion }}</pre> <!-- 👈 aquí el ? -->
+</div>

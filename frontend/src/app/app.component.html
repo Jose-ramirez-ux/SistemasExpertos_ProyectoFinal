@@ -1,71 +1,84 @@
-<h1>Sistema experto de estrategias de estudio</h1>
+<div class="container">
 
-<form (ngSubmit)="enviar()">
-  <label>
-    Estilo:
-    <select [(ngModel)]="entrada.estilo" name="estilo">
-      <option>VISUAL</option>
-      <option>AUDITIVO</option>
-      <option>KINESTESICO</option>
-      <option>MIXTO</option>
-    </select>
-  </label>
+  <h1 class="title">Sistema Experto de Técnicas de Estudio</h1>
 
-  <label>
-    Dificultad:
-    <select [(ngModel)]="entrada.dificultad" name="dificultad">
-      <option>BAJA</option>
-      <option>MEDIA</option>
-      <option>ALTA</option>
-    </select>
-  </label>
+  <div class="card">
 
-  <label>
-    Tiempo (min):
-    <input type="number" [(ngModel)]="entrada.tiempoMinutos" name="tiempoMinutos">
-  </label>
+    <h2 class="section-title">Ingresar Datos</h2>
 
-  <label>
-    Conocimiento previo:
-    <select [(ngModel)]="entrada.conocimientoPrevio" name="conocimientoPrevio">
-      <option>BAJO</option>
-      <option>MEDIO</option>
-      <option>ALTO</option>
-    </select>
-  </label>
+    <form (ngSubmit)="enviar()">
 
-  <label>
-    Horas para el examen:
-    <input type="number" [(ngModel)]="entrada.horasParaExamen" name="horasParaExamen">
-  </label>
+      <div class="form-group">
+        <label>Preferencia de estudio:</label>
+        <select [(ngModel)]="entrada.estilo" name="estilo">
+          <option value="visual">Visual</option>
+          <option value="auditivo">Auditivo</option>
+          <option value="kinestesico">Kinestésico</option>
+          <option value="mixto">Mixto</option>
+        </select>
+      </div>
 
-  <label>
-    Objetivo:
-    <select [(ngModel)]="entrada.objetivo" name="objetivo">
-      <option>MEMORIZAR</option>
-      <option>RESOLVER_PROBLEMAS</option>
-      <option>COMPRENDER</option>
-    </select>
-  </label>
+      <div class="form-group">
+        <label>Dificultad del tema:</label>
+        <select [(ngModel)]="entrada.dificultad" name="dificultad">
+          <option value="baja">Baja</option>
+          <option value="media">Media</option>
+          <option value="alta">Alta</option>
+        </select>
+      </div>
 
-  <button type="submit" [disabled]="cargando">Consultar</button>
-</form>
+      <div class="form-group">
+        <label>Tiempo disponible (minutos):</label>
+        <input type="number" [(ngModel)]="entrada.tiempoMinutos" name="tiempoMinutos">
+      </div>
 
-<p *ngIf="cargando">Consultando sistema experto...</p>
-<p *ngIf="error">{{ error }}</p>
+      <div class="form-group">
+        <label>Conocimiento previo:</label>
+        <select [(ngModel)]="entrada.conocimientoPrevio" name="conocimientoPrevio">
+          <option value="bajo">Bajo</option>
+          <option value="medio">Medio</option>
+          <option value="alto">Alto</option>
+        </select>
+      </div>
 
-<div *ngIf="resultado">
-  <h2>Técnicas recomendadas</h2>
-  <ul>
-    <li *ngFor="let t of resultado.tecnicasRecomendadas">{{ t }}</li>
-  </ul>
+      <div class="form-group">
+        <label>Horas restantes para el examen:</label>
+        <input type="number" [(ngModel)]="entrada.horasParaExamen" name="horasParaExamen">
+      </div>
 
-  <h2>Plan de estudio</h2>
-  <div *ngFor="let b of resultado.bloques">
-    <h3>{{ b.nombre }} ({{ b.duracionMinutos }} min)</h3>
-    <p>{{ b.descripcion }}</p>
+      <div class="form-group">
+        <label>Objetivo:</label>
+        <select [(ngModel)]="entrada.objetivo" name="objetivo">
+          <option value="memorizar">Memorizar</option>
+          <option value="comprender">Comprender</option>
+          <option value="resolver_problemas">Resolver problemas</option>
+        </select>
+      </div>
+
+      <button class="btn-enviar">Generar plan</button>
+    </form>
   </div>
 
-  <h2>Justificación</h2>
-  <pre>{{ resultado?.justificacion }}</pre> <!-- 👈 aquí el ? -->
+  <!-- Error -->
+  <div *ngIf="error" class="alert alert-error">{{ error }}</div>
+
+  <!-- Resultado -->
+  <div *ngIf="resultado" class="result-card">
+    <h2 class="section-title">Resultado</h2>
+
+    <h3>Técnicas recomendadas:</h3>
+    <ul>
+      <li *ngFor="let t of resultado.tecnicasRecomendadas">{{ t }}</li>
+    </ul>
+
+    <h3>Bloques sugeridos:</h3>
+    <div class="bloque" *ngFor="let b of resultado.bloques">
+      <strong>{{ b.nombre }}</strong> — {{ b.duracionMinutos }} min 
+      <p>{{ b.descripcion }}</p>
+    </div>
+
+    <h3>Justificación:</h3>
+    <pre class="justificacion">{{ resultado.justificacion }}</pre>
+
+  </div>
 </div>

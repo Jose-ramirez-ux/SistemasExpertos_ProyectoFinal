@@ -1,14 +1,13 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';        // 👈 para *ngIf y *ngFor
 import { FormsModule } from '@angular/forms';          // 👈 para [(ngModel)]
-import { RouterOutlet } from '@angular/router';
 
 import { RecomendacionesService, EntradaEstudio, PlanEstudio } from './services/recomendaciones.service';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterOutlet],  // 👈 IMPORTANTE
+  imports: [CommonModule, FormsModule],  // 👈 IMPORTANTE
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
